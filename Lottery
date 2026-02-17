@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Professional Lottery Demo</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: linear-gradient(135deg,#141e30,#243b55);
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+    .container {
+      background: white;
+      color: black;
+      max-width: 500px;
+      margin: auto;
+      padding: 20px;
+      border-radius: 10px;
+    }
+    input, button {
+      padding: 10px;
+      margin: 5px;
+      width: 90%;
+    }
+    button {
+      background: #243b55;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #141e30;
+    }
+    ul {
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+
+<h1>🎉 Professional Lottery Demo 🎉</h1>
+
+<div class="container">
+
+  <input type="text" id="name" placeholder="Enter your name">
+  <button onclick="buyTicket()">Buy Ticket</button>
+
+  <p><b>Total Players:</b> <span id="count">0</span></p>
+
+  <h3>🎟 Player List</h3>
+  <ul id="playerList"></ul>
+
+  <hr>
+
+  <input type="password" id="adminPass" placeholder="Admin Password">
+  <button onclick="drawWinner()">Draw Winner</button>
+
+  <h3 id="winner"></h3>
+
+  <h3>🏆 Winner History</h3>
+  <ul id="history"></ul>
+
+  <button onclick="resetGame()">Reset Game</button>
+
+</div>
+
+<script>
+let players = [];
+let historyList = [];
+let adminPassword = "1234"; // change password here
+
+function buyTicket() {
+  let name = document.getElementById("name").value;
+  if(name === "") {
+    alert("Enter name first!");
+    return;
+  }
+
+  let ticketNumber = Math.floor(Math.random() * 10000);
+  players.push({name: name, ticket: ticketNumber});
+
+  let li = document.createElement("li");
+  li.textContent = name + " (Ticket: " + ticketNumber + ")";
+  document.getElementById("playerList").appendChild(li);
+
+  document.getElementById("count").textContent = players.length;
+  document.getElementById("name").value = "";
+}
+
+function drawWinner() {
+  let pass = document.getElementById("adminPass").value;
+  if(pass !== adminPassword) {
+    alert("Wrong Admin Password!");
+    return;
+  }
+
+  if(players.length === 0) {
+    alert("No players!");
+    return;
+  }
+
+  let randomIndex = Math.floor(Math.random() * players.length);
+  let winner = players[randomIndex];
+
+  document.getElementById("winner").innerHTML =
+    "🏆 Winner: " + winner.name + " (Ticket: " + winner.ticket + ")";
+
+  historyList.push(winner);
+
+  let li = document.createElement("li");
+  li.textContent = winner.name + " (Ticket: " + winner.ticket + ")";
+  document.getElementById("history").appendChild(li);
+
+  document.getElementById("adminPass").value = "";
+}
+
+function resetGame() {
+  players = [];
+  historyList = [];
+  document.getElementById("playerList").innerHTML = "";
+  document.getElementById("history").innerHTML = "";
+  document.getElementById("winner").innerHTML = "";
+  document.getElementById("count").textContent = "0";
+}
+</script>
+
+</body>
+</html>
