@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Lottery Demo</title>
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      color: white;
+      padding: 30px;
+    }
+    .box {
+      background: white;
+      color: black;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 400px;
+      margin: auto;
+    }
+    input, button {
+      padding: 10px;
+      margin: 5px;
+      width: 80%;
+    }
+    button {
+      background: #2a5298;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #1e3c72;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🎉 Lottery Demo 🎉</h1>
+
+  <div class="box">
+    <input type="text" id="name" placeholder="Enter your name">
+    <button onclick="buyTicket()">Buy Ticket</button>
+    <p id="ticket"></p>
+
+    <hr>
+
+    <button onclick="drawWinner()">Draw Winner</button>
+    <h3 id="winner"></h3>
+  </div>
+
+<script>
+let players = [];
+
+function buyTicket() {
+  let name = document.getElementById("name").value;
+  if(name === "") {
+    alert("Enter your name first!");
+    return;
+  }
+
+  let ticketNumber = Math.floor(Math.random() * 1000);
+  players.push({name: name, ticket: ticketNumber});
+
+  document.getElementById("ticket").innerHTML =
+    "🎟 Ticket Number: " + ticketNumber;
+
+  document.getElementById("name").value = "";
+}
+
+function drawWinner() {
+  if(players.length === 0) {
+    alert("No players yet!");
+    return;
+  }
+
+  let randomIndex = Math.floor(Math.random() * players.length);
+  let winner = players[randomIndex];
+
+  document.getElementById("winner").innerHTML =
+    "🏆 Winner: " + winner.name + " (Ticket: " + winner.ticket + ")";
+}
+</script>
+
+</body>
+  </html>
